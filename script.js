@@ -8,17 +8,23 @@ let numeroDeDocumento = "";
 // Validación de perfil
 if (edad >= edadMinima) {
     // Persona mayor de edad: puede continuar con el cálculo.
+} 
 
-} else {
+else {
     // Persona menor de edad: no puede aplicar en el simulador.
 
 }
 if (edad <= edadMaximaDeBeneficiarioPorCotizante) {
 
-} else {
+} 
+
+else {
     // Persona mayor a 25 años: no puede ser beneficiario por cotizante.
 
 }
+
+//Ingreso de información salarial
+     
 
 // Declaración de variables para el cálculo de salario
 let salario = 0;
@@ -54,18 +60,16 @@ const arlTarifas = {
     5: riesgoVMaximo,
 };
 
+// Funciones base * porcentaje
+function calcularPorcentaje (base, porcentaje) {
+    return base * porcentaje;
+}
+
 const arl = arlTarifas[clasificacionDeNivelDeRiesgo] ? arlTarifas[clasificacionDeNivelDeRiesgo] * ibc : 0;
-//Se paga 1% adicional si el IBC es mayor o igual 4 SMMLV.
+
+//Se paga 1% adicional si el IBC es mayor o igual 4 SMMLV
 const fondoSolidaridadPensional = porcentajeDeIBC >= 4 * smlv ? 0.01 * ibc : 0;
 const retencionEnLaFuente = 0;
 const edadMinima = 18;
 const edadMaximaDeBeneficiarioPorCotizante = 25;
 const edadPension = 60;
-
-//Resultados.
-console.log("Salario: " + salario);
-console.log("Comisiones: " + comisiones);
-console.log("Total de Horas Extras: " + totalDeHorasExtras);
-console.log("IBC (ingreso base de cotización): " + ibc);
-console.log("ARL: " + arl);
-console.log("Fondo de Solidaridad Pensional: " + fondoSolidaridadPensional);
