@@ -1,9 +1,10 @@
-// Declaración de variables ingreso de información basica
-let nombreCompleto = "";
-let edad = 0;
-let tipoDeDocumento = "";
-let numeroDeDocumento = "";
+//Emily Vanesa Chisaba Rivera - 1019035292
 
+// Declaración de variables ingreso de información basica
+let nombreCompleto = document.getElementById("nombreCompleto").value;
+let edad = document.getElementById("edad").value;
+let tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
+let numeroDeDocumento = document.getElementById("numeroDeDocumento").value;
 
 // Validación de perfil
 if (edad >= edadMinima) {
@@ -24,13 +25,10 @@ else {
 }
 
 //Ingreso de información salarial
-     
-
-// Declaración de variables para el cálculo de salario
-let salario = 0;
-let comisiones = 0;
-let totalDeHorasExtras = 0;
-let clasificacionDeNivelDeRiesgo = 1;
+let salario = document.getElementById("salario").value;
+let comisiones = document.getElementById("comisiones").value;
+let totalDeHorasExtras = document.getElementById("totalDeHorasExtras").value;
+let clasificacionDeNivelDeRiesgo = document.getElementById("clasificacionDeNivelDeRiesgo").value;
 let porcentajeDeIBC = 0;
 
 // Valores de referencia para el año 2026

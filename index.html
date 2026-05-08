@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+<head> 
+<meta charset="UTF-8"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+<title>Simulador de Pago de Prestaciones Laborales</title> 
+<link rel="stylesheet" href="style.css">
+</head> 
+<body> 
+<script src="script.js"></script>
+<!--Fomulario-->
+<section class="sectionFormulario">
+  <h1>Simulador de pago de prestaciones laborales</h1>
+  <p>Ingrese la información solicitada para calcular el pago de sus prestaciones laborales.</p>
+<form class="formulario">
+  <div class="formulario">
+    <label for="nombreCompleto">Nombre Completo:</label>
+    <input type="text" name="" id="nombreCompleto" required />
+  </div>
+  <div class="formulario">
+    <label for="edad">Edad:</label>
+    <input type="number" name="edad" id="edad" required />
+  </div>
+  <div class="formulario">
+  <label for="tipoDeDocumento">Tipo de Documento:</label>
+
+<select name="tipoDeDocumento" id="tipoDeDocumento">
+  <option value="default">Seleccione</option>
+  <option value="rc">Registro Civil de Nacimiento</option>
+  <option value="ti">Tarjeta de Identidad</option>
+  <option value="cc">Cédula de Ciudadanía</option>
+  <option value="ce">Cédula de Extranjería</option>
+  <option value="pp">Pasaporte</option>
+</select>
+  </div>
+  <div class="formulario">
+    <label for="salario">Salario: </label>
+    <input type="number" name="salario" id="salario" required />
+  </div>  
+  <div class="formulario">
+    <label for="comisiones">Comisiones: </label>
+    <input type="number" name="comisiones" id="comisiones"/>
+  </div>  
+  <div class="formulario">
+    <label for="totalDeHorasExtras">Horas extra: </label>
+    <input type="number" name="totalDeHorasExtras" id="totalDeHorasExtras"/>
+  </div>
+  <div class="formulario">
+    <label for="clasificacionDeNivelDeRiesgo">Nivel de riesgo ARL: </label>
+    <select name="clasificacionDeNivelDeRiesgo" id="clasificacionDeNivelDeRiesgo" required>
+        <option value="">Seleccione</option>
+        <option value="1">Nivel 1</option>
+        <option value="2">Nivel 2</option>
+        <option value="3">Nivel 3</option>
+        <option value="4">Nivel 4</option>
+        <option value="5">Nivel 5</option>
+    </select>
+  </div>
+</form>
+</section>
+</body> 
+</html>
+
