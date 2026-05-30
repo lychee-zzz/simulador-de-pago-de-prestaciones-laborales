@@ -1,73 +1,266 @@
-//Emily Vanesa Chisaba Rivera - 1019035292
+/* Emily Vanesa Chisaba Rivera CC 1019035292 */
 
-// Declaración de variables ingreso de información basica
-let nombreCompleto = document.getElementById("nombreCompleto").value;
-let edad = document.getElementById("edad").value;
-let tipoDeDocumento = document.getElementById("tipoDeDocumento").value;
-let numeroDeDocumento = document.getElementById("numeroDeDocumento").value;
+function calcular() {
 
-// Validación de perfil
-if (edad >= edadMinima) {
-    // Persona mayor de edad: puede continuar con el cálculo.
-} 
+    // LIMPIAR RESULTADOS
 
-else {
-    // Persona menor de edad: no puede aplicar en el simulador.
+    document.getElementById("nombreResultado").textContent = "";
+    document.getElementById("documentoResultado").textContent = "";
+    document.getElementById("salarioResultado").textContent = "";
+    document.getElementById("auxilioResultado").textContent = "";
+    document.getElementById("comisionesResultado").textContent = "";
+    document.getElementById("horasResultado").textContent = "";
+    document.getElementById("devengadoResultado").textContent = "";
+    document.getElementById("ibcResultado").textContent = "";
+    document.getElementById("saludResultado").textContent = "";
+    document.getElementById("pensionResultado").textContent = "";
+    document.getElementById("fondoResultado").textContent = "";
+    document.getElementById("arlResultado").textContent = "";
+    document.getElementById("deduccionesResultado").textContent = "";
+    document.getElementById("totalResultado").textContent = "";
 
+    // DATOS PERSONALES
+
+    const nombreCompleto =
+        document.getElementById("nombreCompleto").value;
+
+    const edad =
+        Number(document.getElementById("edad").value);
+
+    const tipoDocumento =
+        document.getElementById("tipoDeDocumento").value;
+
+    const numeroDocumento =
+        document.getElementById("numeroDeDocumento").value;
+
+    // VALIDACIÓN DOCUMENTO
+
+    if (tipoDocumento === "noSeleccionado") {
+
+        alert("Seleccione un tipo de documento.");
+        return;
+    }
+
+    // VALIDACIONES DE EDAD
+
+    if (edad < 18) {
+
+        alert("El usuario es menor de edad y no puede continuar.");
+        return;
+    }
+
+    if (edad < 25) {
+
+        alert("Usuario beneficiario por cotizante.");
+        return;
+    }
+
+    // CONSTANTES
+
+    const smlv = 1750905;
+    const auxilioTransporte = 249095;
+
+    const riesgoIMinimo = 0.00522;
+    const riesgoIIBajo = 0.01044;
+    const riesgoIIIMedio = 0.02436;
+    const riesgoIVAlto = 0.04350;
+    const riesgoVMaximo = 0.06960;
+
+    // CASO PENSIONADO
+
+    if (edad >= 60) {
+
+        const mesadaPensional =
+            Number(document.getElementById("mesadaPensional").value);
+
+        if (mesadaPensional <= 0) {
+
+            alert("Ingrese la mesada pensional.");
+            return;
+        }
+
+        const pension =
+            mesadaPensional * 0.04;
+
+        document.getElementById("nombreResultado").textContent =
+            `Nombre: ${nombreCompleto}`;
+
+        document.getElementById("documentoResultado").textContent =
+            `Documento: ${tipoDocumento} ${numeroDocumento}`;
+
+        document.getElementById("pensionResultado").textContent =
+            `Pensión: $${pension.toLocaleString()}`;
+
+        return;
+    }
+
+    // INFORMACIÓN SALARIAL
+
+    const salario =
+        Number(document.getElementById("salario").value);
+
+    const comisiones =
+        Number(document.getElementById("comisiones").value) || 0;
+
+    const horasExtras =
+        Number(document.getElementById("totalDeHorasExtras").value) || 0;
+
+    const nivelRiesgo =
+        document.getElementById("clasificacionDeNivelDeRiesgo").value;
+
+    // AUXILIO DE TRANSPORTE
+
+    let auxilio = 0;
+
+    if (salario <= smlv * 2) {
+
+        auxilio = auxilioTransporte;
+    }
+
+    // TOTAL DEVENGADO
+
+    const totalDevengado =
+        salario +
+        auxilio +
+        comisiones +
+        horasExtras;
+
+    // IBC
+
+    const ibc =
+        totalDevengado * 0.70;
+
+    // SALUD Y PENSIÓN
+
+    let salud =
+        ibc * 0.04;
+
+    let pension =
+        ibc * 0.04;
+
+    // FONDO DE SOLIDARIDAD
+
+    let fondoSolidaridad = 0;
+
+    if (ibc >= smlv * 4) {
+
+        fondoSolidaridad =
+            ibc * 0.01;
+    }
+
+    // ARL
+
+    const arlTarifas = {
+
+        1: riesgoIMinimo,
+        2: riesgoIIBajo,
+        3: riesgoIIIMedio,
+        4: riesgoIVAlto,
+        5: riesgoVMaximo
+
+    };
+
+    let arl =
+        ibc * (arlTarifas[nivelRiesgo] || 0);
+
+    // REGLA DEL TALLER
+
+    if (salario < smlv * 2) {
+
+        salud = 0;
+        pension = 0;
+        fondoSolidaridad = 0;
+        arl = 0;
+    }
+
+    // TOTAL DEDUCCIONES
+
+    const totalDeducciones =
+        salud +
+        pension +
+        fondoSolidaridad +
+        arl;
+
+    // TOTAL NETO
+
+    const total =
+        totalDevengado -
+        totalDeducciones;
+
+    // RESULTADOS
+
+    document.getElementById("nombreResultado").textContent =
+        `Nombre: ${nombreCompleto}`;
+
+    document.getElementById("documentoResultado").textContent =
+        `Documento: ${tipoDocumento} ${numeroDocumento}`;
+
+    document.getElementById("salarioResultado").textContent =
+        `Salario: $${salario.toLocaleString()}`;
+
+    document.getElementById("auxilioResultado").textContent =
+        `Auxilio de transporte: $${auxilio.toLocaleString()}`;
+
+    document.getElementById("comisionesResultado").textContent =
+        `Comisiones: $${comisiones.toLocaleString()}`;
+
+    document.getElementById("horasResultado").textContent =
+        `Horas extra: $${horasExtras.toLocaleString()}`;
+
+    document.getElementById("devengadoResultado").textContent =
+        `Total devengado: $${totalDevengado.toLocaleString()}`;
+
+    document.getElementById("ibcResultado").textContent =
+        `IBC: $${ibc.toLocaleString()}`;
+
+    document.getElementById("saludResultado").textContent =
+        `Salud: $${salud.toLocaleString()}`;
+
+    document.getElementById("pensionResultado").textContent =
+        `Pensión: $${pension.toLocaleString()}`;
+
+    document.getElementById("fondoResultado").textContent =
+        `Fondo de solidaridad: $${fondoSolidaridad.toLocaleString()}`;
+
+    document.getElementById("arlResultado").textContent =
+        `ARL: $${arl.toLocaleString()}`;
+
+    document.getElementById("deduccionesResultado").textContent =
+        `Total deducciones: $${totalDeducciones.toLocaleString()}`;
+
+    document.getElementById("totalResultado").textContent =
+        `Total a recibir: $${total.toLocaleString()}`;
 }
-if (edad <= edadMaximaDeBeneficiarioPorCotizante) {
+// MOSTRAR U OCULTAR MESADA PENSIONAL
 
-} 
+const edadInput =
+    document.getElementById("edad");
 
-else {
-    // Persona mayor a 25 años: no puede ser beneficiario por cotizante.
+const campoMesada =
+    document.getElementById("campoMesada");
 
-}
+const datosLaborales =
+    document.getElementById("datosLaborales");
 
-//Ingreso de información salarial
-let salario = document.getElementById("salario").value;
-let comisiones = document.getElementById("comisiones").value;
-let totalDeHorasExtras = document.getElementById("totalDeHorasExtras").value;
-let clasificacionDeNivelDeRiesgo = document.getElementById("clasificacionDeNivelDeRiesgo").value;
-let porcentajeDeIBC = 0;
+// Estado inicial
 
-// Valores de referencia para el año 2026
-const smlv = 1750905;
-const salarioMaximoLegalVigente = 22761765;
-const auxilioTransporte = 249095;
-const unidadDeValorTributario = 52.37;
+campoMesada.style.display = "none";
 
-// Tarifas de ARL (IBC)
-const riesgoIMinimo = 0.00522;
-const riesgoIIBajo = 0.01044;
-const riesgoIIIMedio = 0.02436;
-const riesgoIVAlto = 0.04350;
-const riesgoVMaximo = 0.06960;
+edadInput.addEventListener("input", function () {
 
-// Declaración de constantes para el cálculo de salario
-const ibc = 0.7 * totalDevengado;
-const salud = 0.04 * ibc;
-const pension = 0.04 * ibc;
-const totalDevengado = salario + comisiones + totalDeHorasExtras;
+    const edad =
+        Number(this.value);
 
-const arlTarifas = {
-    1: riesgoIMinimo,
-    2: riesgoIIBajo,
-    3: riesgoIIIMedio,
-    4: riesgoIVAlto,
-    5: riesgoVMaximo,
-};
+    if (edad >= 60) {
 
-// Funciones base * porcentaje
-function calcularPorcentaje (base, porcentaje) {
-    return base * porcentaje;
-}
+        campoMesada.style.display = "flex";
+        datosLaborales.style.display = "none";
 
-const arl = arlTarifas[clasificacionDeNivelDeRiesgo] ? arlTarifas[clasificacionDeNivelDeRiesgo] * ibc : 0;
+    } else {
 
-//Se paga 1% adicional si el IBC es mayor o igual 4 SMMLV
-const fondoSolidaridadPensional = porcentajeDeIBC >= 4 * smlv ? 0.01 * ibc : 0;
-const retencionEnLaFuente = 0;
-const edadMinima = 18;
-const edadMaximaDeBeneficiarioPorCotizante = 25;
-const edadPension = 60;
+        campoMesada.style.display = "none";
+        datosLaborales.style.display = "contents";
+
+    }
+
+});

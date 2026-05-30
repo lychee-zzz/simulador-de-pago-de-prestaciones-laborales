@@ -31,12 +31,11 @@
             <label for="edad">Edad:</label>
             <input type="number" id="edad" required>
         </div>
-
         <div class="campo">
             <label for="tipoDeDocumento">Tipo de Documento:</label>
 
-            <select id="tipoDeDocumento">
-                <option value="">Seleccione</option>
+            <select id="tipoDeDocumento" required>
+                <option value="noSeleccionado">Seleccione</option>
                 <option value="rc">Registro Civil</option>
                 <option value="ti">Tarjeta de Identidad</option>
                 <option value="cc">Cédula de Ciudadanía</option>
@@ -49,6 +48,10 @@
             <label for="numeroDeDocumento">Número de Documento:</label>
             <input type="number" id="numeroDeDocumento" required>
         </div>
+
+<!-- datos laborales -->
+
+    <div id="datosLaborales">  
 
         <div class="campo">
             <label for="salario">Salario:</label>
@@ -70,7 +73,7 @@
                 Nivel de Riesgo ARL:
             </label>
 
-            <select id="clasificacionDeNivelDeRiesgo">
+            <select id="clasificacionDeNivelDeRiesgo" required>
                 <option value="">Seleccione</option>
                 <option value="1">Nivel 1</option>
                 <option value="2">Nivel 2</option>
@@ -79,15 +82,54 @@
                 <option value="5">Nivel 5</option>
             </select>
         </div>
+        </div>
+        <div>
+          
+        <div class="campo" id="campoMesada">
+            <label for="mesadaPensional">Mesada Pensional:</label>
+            <input type="number" id="mesadaPensional" placeholder="Solo para mayores de 60 años">
+        </div>
 
         <button type="button" onclick="calcular()">
             Calcular
         </button>
-
+</div>
     </form>
 </div>
 
-    <div id="resultado"></div>
+<div id="resultado">
+
+    <h2>Resultado del cálculo</h2>
+
+    <p id="nombreResultado"></p>
+
+    <p id="documentoResultado"></p>
+
+    <p id="salarioResultado"></p>
+
+    <p id="auxilioResultado"></p>
+
+    <p id="comisionesResultado"></p>
+
+    <p id="horasResultado"></p>
+
+    <p id="devengadoResultado"></p>
+
+    <p id="ibcResultado"></p>
+
+    <p id="saludResultado"></p>
+
+    <p id="pensionResultado"></p>
+
+    <p id="fondoResultado"></p>
+
+    <p id="arlResultado"></p>
+
+    <p id="deduccionesResultado"></p>
+
+    <p id="totalResultado"></p>
+
+</div>
 
 </section>
 
