@@ -60,7 +60,7 @@ p{
     background: var(--color-formulario);
     padding: 30px;
     border-radius: 35px;
-    box-shadow: 0 10px 30px rgba(63,72,245,.15);
+    box-shadow: 0 10px 30px var(--color-texto-oscuro);
 }
 
 .campo{
@@ -105,17 +105,35 @@ button:hover{
 
 /*responsive------------------------------------------------------------*/
 
-@media(max-width:768px){
 
-    .sectionFormulario{
+@media (min-width:769px){
+    body{
+        height:100vh;
+        overflow:hidden;
+        display:block;
+    }
+}
+
+@media (max-width:768px){
+    body{
+        overflow-y:auto;
+        overflow-x:hidden;
+        display:block;
+    }
+
+     .sectionFormulario{
         grid-template-columns:1fr;
+        padding:15px;
+        width: 95px%;
     }
 
     .formulario{
         grid-template-columns:1fr;
+        width:95%;
+        
     }
 
-    h1{
-        font-size:2.3rem;
-    }
 }
+
+
+    
