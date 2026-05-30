@@ -78,11 +78,49 @@ function calcular() {
     const tipoDocumento = document.getElementById("tipoDeDocumento").value;
     const numeroDocumento = document.getElementById("numeroDeDocumento").value.trim();
 
-    // VALIDACIÓN DOCUMENTO
+  // VALIDACIÓN CAMPOS PERSONALES
 
+    if (!nombreCompleto) {
+
+        alert("Ingrese su nombre completo.");
+        return;
+    }
+
+    if (!numeroDocumento) {
+
+        alert("Ingrese su número de documento.");
+        return;
+    }
+
+    if (!edad || edad <= 0) {
+
+        alert("Ingrese una edad válida.");
+        return;
+    }
+
+    // VALIDACIÓN TIPO DE DOCUMENTO
     if (tipoDocumento === "noSeleccionado") {
 
         alert("Seleccione un tipo de documento.");
+        return;
+    }
+
+    // VALIDACIÓN DOCUMENTO VS EDAD
+    if (tipoDocumento === "RC" && edad >= 7) {
+
+        alert("El Registro Civil corresponde a menores de 7 años.");
+        return;
+    }
+
+    if (tipoDocumento === "TI" && (edad < 7 || edad > 17)) {
+
+        alert("La Tarjeta de Identidad corresponde a personas entre 7 y 17 años.");
+        return;
+    }
+
+    if (tipoDocumento === "CC" && edad < 18) {
+
+        alert("La Cédula de Ciudadanía corresponde a mayores de 18 años.");
         return;
     }
 
@@ -95,6 +133,7 @@ function calcular() {
     }
 
     if (edad < 25) {
+
         alert("Usuario clasificado como 'Beneficiario por cotizante'. No puede continuar.");
         return;
     }
@@ -120,21 +159,36 @@ function calcular() {
 
     // CASO PENSIONADO (edad >= 60)
     if (edad >= 60) {
-        const mesadaPensional = Number(document.getElementById("mesadaPensional").value);
+
+        const mesadaPensional =
+            Number(document.getElementById("mesadaPensional").value);
 
         if (!mesadaPensional || mesadaPensional <= 0) {
             alert("Ingrese la mesada pensional.");
             return;
         }
 
-        const pension = mesadaPensional * 0.04;
+        const pensionPensionado = mesadaPensional * 0.04;
+        const totalPensionado   = mesadaPensional - pensionPensionado;
+
+        document.getElementById("nombreResultado").textContent =
+            `Nombre: ${nombreCompleto}`;
+
+        document.getElementById("documentoResultado").textContent =
+            `Documento: ${tipoDocumento} ${numeroDocumento}`;
 
         document.getElementById("salarioResultado").textContent =
             `Mesada pensional: $${mesadaPensional.toLocaleString("es-CO")}`;
+
         document.getElementById("pensionResultado").textContent =
-            `Pensión (4%): $${pension.toLocaleString("es-CO")}`;
+            `Pensión (4%): $${Math.round(pensionPensionado).toLocaleString("es-CO")}`;
+
+        document.getElementById("deduccionesResultado").textContent =
+            `Total deducciones: $${Math.round(pensionPensionado).toLocaleString("es-CO")}`;
+
         document.getElementById("totalResultado").textContent =
-            `Total a recibir: $${(mesadaPensional - pension).toLocaleString("es-CO")}`;
+            `Total a recibir: $${Math.round(totalPensionado).toLocaleString("es-CO")}`;
+
         return;
     }
 
@@ -153,6 +207,7 @@ function calcular() {
         alert("Seleccione el nivel de riesgo ARL.");
         return;
     }
+    
 
     // AUXILIO DE TRANSPORTE (solo si salario <= 2 SMLV)
     const auxilio = salario <= smlv * 2 ? auxilioTransporte : 0;
