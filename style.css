@@ -8,61 +8,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root{
-    --color-fondo:#e0e0e0;
-    --color-texto:#030703;
-    --color-titulo:#8700c5;
-    --blanco:#ffffff;
+    --color-fondo:#efefef;
+    --color-formulario:#3f48f5;
+    --color-acento:#d9f25d;
+    --color-texto:#ffffff;
+    --color-texto-oscuro:#3f48f5;
 }
 
 body{
     font-family: 'Poppins', sans-serif;
-    min-height:100vh;
-    background:var(--color-fondo);
-    color:var(--color-texto);
+    min-height: 100vh;
+    background: var(--color-fondo);
+    color: var(--color-texto);
 }
 
 .sectionFormulario{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: center;
+    padding: 30px;
 }
 
 h1{
-    color:var(--color-titulo);
-    margin-bottom:10px;
+    color: var(--color-texto-oscuro);
+    margin-bottom: 10px;
 }
 
 p{
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .formulario{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-    background: var(--blanco);
-    padding:25px;
-    border-radius:10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: var(--color-formulario);
+    padding:30px;
+    border-radius:35px;
 }
 
 .campo{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-input,
-select{
-    padding:8px;
+input, select{
+    background:white;
+    border:none;
+    border-radius:20px;
+    padding:12px;
 }
 
 button{
-    padding:10px;
-    cursor:pointer;
+    background: var(--color-acento);
+    color: var(--color-texto-oscuro);
+    border: none;
+    border-radius: 20px;
+    padding: 12px;
+    font-weight: 700;
 }
 
 #resultado{
-    margin-top:20px;
-    font-weight:bold;
+    margin-top: 20px;
+    font-weight: bold;
 }
