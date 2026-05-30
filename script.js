@@ -3,40 +3,25 @@
 function calcular() {
 
     // LIMPIAR RESULTADOS
-
-    document.getElementById("nombreResultado").textContent = "";
-    document.getElementById("documentoResultado").textContent = "";
-    document.getElementById("salarioResultado").textContent = "";
-    document.getElementById("auxilioResultado").textContent = "";
-    document.getElementById("comisionesResultado").textContent = "";
-    document.getElementById("horasResultado").textContent = "";
-    document.getElementById("devengadoResultado").textContent = "";
-    document.getElementById("ibcResultado").textContent = "";
-    document.getElementById("saludResultado").textContent = "";
-    document.getElementById("pensionResultado").textContent = "";
-    document.getElementById("fondoResultado").textContent = "";
-    document.getElementById("arlResultado").textContent = "";
-    document.getElementById("deduccionesResultado").textContent = "";
-    document.getElementById("totalResultado").textContent = "";
+    const ids = [
+        "nombreResultado", "documentoResultado", "salarioResultado",
+        "auxilioResultado", "comisionesResultado", "horasResultado",
+        "devengadoResultado", "ibcResultado", "saludResultado",
+        "pensionResultado", "fondoResultado", "arlResultado",
+        "deduccionesResultado", "totalResultado"
+    ];
+    ids.forEach(id => document.getElementById(id).textContent = "");
 
     // DATOS PERSONALES
-
-    const nombreCompleto =
-        document.getElementById("nombreCompleto").value;
-
-    const edad =
-        Number(document.getElementById("edad").value);
-
-    const tipoDocumento =
-        document.getElementById("tipoDeDocumento").value;
-
-    const numeroDocumento =
-        document.getElementById("numeroDeDocumento").value;
+    const nombreCompleto   = document.getElementById("nombreCompleto").value.trim();
+    const edad             = Number(document.getElementById("edad").value);
+    const tipoDocumento    = document.getElementById("tipoDeDocumento").value;
+    const numeroDocumento  = document.getElementById("numeroDeDocumento").value.trim();
 
     // VALIDACIÓN DOCUMENTO
 
     if (tipoDocumento === "noSeleccionado") {
-
+        
         alert("Seleccione un tipo de documento.");
         return;
     }
@@ -50,215 +35,139 @@ function calcular() {
     }
 
     if (edad < 25) {
-
-        alert("Usuario beneficiario por cotizante.");
+        alert("Usuario clasificado como 'Beneficiario por cotizante'. No puede continuar.");
         return;
     }
 
-    // CONSTANTES
-
-    const smlv = 1750905;
+    // CONSTANTES 2026
+    const smlv              = 1750905;
     const auxilioTransporte = 249095;
+    const uvt               = 52.37;
 
-    const riesgoIMinimo = 0.00522;
-    const riesgoIIBajo = 0.01044;
-    const riesgoIIIMedio = 0.02436;
-    const riesgoIVAlto = 0.04350;
-    const riesgoVMaximo = 0.06960;
+    const arlTarifas = {
+        "1": 0.00522,
+        "2": 0.01044,
+        "3": 0.02436,
+        "4": 0.04350,
+        "5": 0.06960
+    };
 
-    // CASO PENSIONADO
+    // MOSTRAR IDENTIFICACIÓN
+    document.getElementById("nombreResultado").textContent =
+        `Nombre: ${nombreCompleto}`;
+    document.getElementById("documentoResultado").textContent =
+        `Documento: ${tipoDocumento.toUpperCase()} ${numeroDocumento}`;
 
+    // CASO PENSIONADO (edad >= 60)
     if (edad >= 60) {
+        const mesadaPensional = Number(document.getElementById("mesadaPensional").value);
 
-        const mesadaPensional =
-            Number(document.getElementById("mesadaPensional").value);
-
-        if (mesadaPensional <= 0) {
-
+        if (!mesadaPensional || mesadaPensional <= 0) {
             alert("Ingrese la mesada pensional.");
             return;
         }
 
-        const pension =
-            mesadaPensional * 0.04;
+        const pension = mesadaPensional * 0.04;
 
-        document.getElementById("nombreResultado").textContent =
-            `Nombre: ${nombreCompleto}`;
-
-        document.getElementById("documentoResultado").textContent =
-            `Documento: ${tipoDocumento} ${numeroDocumento}`;
-
+        document.getElementById("salarioResultado").textContent =
+            `Mesada pensional: $${mesadaPensional.toLocaleString("es-CO")}`;
         document.getElementById("pensionResultado").textContent =
-            `Pensión: $${pension.toLocaleString()}`;
-
+            `Pensión (4%): $${pension.toLocaleString("es-CO")}`;
+        document.getElementById("totalResultado").textContent =
+            `Total a recibir: $${(mesadaPensional - pension).toLocaleString("es-CO")}`;
         return;
     }
 
     // INFORMACIÓN SALARIAL
+    const salario      = Number(document.getElementById("salario").value);
+    const comisiones   = Number(document.getElementById("comisiones").value) || 0;
+    const horasExtras  = Number(document.getElementById("totalDeHorasExtras").value) || 0;
+    const nivelRiesgo  = document.getElementById("clasificacionDeNivelDeRiesgo").value;
 
-    const salario =
-        Number(document.getElementById("salario").value);
-
-    const comisiones =
-        Number(document.getElementById("comisiones").value) || 0;
-
-    const horasExtras =
-        Number(document.getElementById("totalDeHorasExtras").value) || 0;
-
-    const nivelRiesgo =
-        document.getElementById("clasificacionDeNivelDeRiesgo").value;
-
-    // AUXILIO DE TRANSPORTE
-
-    let auxilio = 0;
-
-    if (salario <= smlv * 2) {
-
-        auxilio = auxilioTransporte;
+    if (!salario || salario <= 0) {
+        alert("Ingrese un salario válido.");
+        return;
     }
 
-    // TOTAL DEVENGADO
+    if (!nivelRiesgo) {
+        alert("Seleccione el nivel de riesgo ARL.");
+        return;
+    }
 
-    const totalDevengado =
-        salario +
-        auxilio +
-        comisiones +
-        horasExtras;
+    // AUXILIO DE TRANSPORTE (solo si salario <= 2 SMLV)
+    const auxilio = salario <= smlv * 2 ? auxilioTransporte : 0;
 
-    // IBC
+    // TOTAL DEVENGADO (para mostrar en resultados)
+    const totalDevengado = salario + auxilio + comisiones + horasExtras;
 
-    const ibc =
-        totalDevengado * 0.70;
+    // BASE IBC: excluye auxilio de transporte (según enunciado)
+    const baseIBC = salario + comisiones + horasExtras;
+    const ibc     = baseIBC * 0.70;
 
-    // SALUD Y PENSIÓN
-
-    let salud =
-        ibc * 0.04;
-
-    let pension =
-        ibc * 0.04;
-
-    // FONDO DE SOLIDARIDAD
-
+    // DEDUCCIONES — solo aplican si salario >= 2 SMLV
+    let salud            = 0;
+    let pension          = 0;
     let fondoSolidaridad = 0;
+    let arl              = 0;
 
-    if (ibc >= smlv * 4) {
+    if (salario >= smlv * 2) {
+        salud   = ibc * 0.04;
+        pension = ibc * 0.04;
 
-        fondoSolidaridad =
-            ibc * 0.01;
+        if (ibc >= smlv * 4) {
+            fondoSolidaridad = ibc * 0.01;
+        }
+
+        arl = ibc * (arlTarifas[nivelRiesgo] || 0);
     }
 
-    // ARL
+    const totalDeducciones = salud + pension + fondoSolidaridad + arl;
+    const total            = totalDevengado - totalDeducciones;
 
-    const arlTarifas = {
-
-        1: riesgoIMinimo,
-        2: riesgoIIBajo,
-        3: riesgoIIIMedio,
-        4: riesgoIVAlto,
-        5: riesgoVMaximo
-
-    };
-
-    let arl =
-        ibc * (arlTarifas[nivelRiesgo] || 0);
-
-    // REGLA DEL TALLER
-
-    if (salario < smlv * 2) {
-
-        salud = 0;
-        pension = 0;
-        fondoSolidaridad = 0;
-        arl = 0;
-    }
-
-    // TOTAL DEDUCCIONES
-
-    const totalDeducciones =
-        salud +
-        pension +
-        fondoSolidaridad +
-        arl;
-
-    // TOTAL NETO
-
-    const total =
-        totalDevengado -
-        totalDeducciones;
-
-    // RESULTADOS
-
-    document.getElementById("nombreResultado").textContent =
-        `Nombre: ${nombreCompleto}`;
-
-    document.getElementById("documentoResultado").textContent =
-        `Documento: ${tipoDocumento} ${numeroDocumento}`;
-
+    // MOSTRAR RESULTADOS
     document.getElementById("salarioResultado").textContent =
-        `Salario: $${salario.toLocaleString()}`;
-
+        `Salario: $${salario.toLocaleString("es-CO")}`;
     document.getElementById("auxilioResultado").textContent =
-        `Auxilio de transporte: $${auxilio.toLocaleString()}`;
-
+        `Auxilio de transporte: $${auxilio.toLocaleString("es-CO")}`;
     document.getElementById("comisionesResultado").textContent =
-        `Comisiones: $${comisiones.toLocaleString()}`;
-
+        `Comisiones: $${comisiones.toLocaleString("es-CO")}`;
     document.getElementById("horasResultado").textContent =
-        `Horas extra: $${horasExtras.toLocaleString()}`;
-
+        `Horas extra: $${horasExtras.toLocaleString("es-CO")}`;
     document.getElementById("devengadoResultado").textContent =
-        `Total devengado: $${totalDevengado.toLocaleString()}`;
-
+        `Total devengado: $${totalDevengado.toLocaleString("es-CO")}`;
     document.getElementById("ibcResultado").textContent =
-        `IBC: $${ibc.toLocaleString()}`;
-
+        `IBC (70% base): $${ibc.toLocaleString("es-CO")}`;
     document.getElementById("saludResultado").textContent =
-        `Salud: $${salud.toLocaleString()}`;
-
+        `Salud (4%): $${salud.toLocaleString("es-CO")}`;
     document.getElementById("pensionResultado").textContent =
-        `Pensión: $${pension.toLocaleString()}`;
-
+        `Pensión (4%): $${pension.toLocaleString("es-CO")}`;
     document.getElementById("fondoResultado").textContent =
-        `Fondo de solidaridad: $${fondoSolidaridad.toLocaleString()}`;
-
+        `Fondo de solidaridad (1%): $${fondoSolidaridad.toLocaleString("es-CO")}`;
     document.getElementById("arlResultado").textContent =
-        `ARL: $${arl.toLocaleString()}`;
-
+        `ARL (Nivel ${nivelRiesgo}): $${arl.toLocaleString("es-CO")}`;
     document.getElementById("deduccionesResultado").textContent =
-        `Total deducciones: $${totalDeducciones.toLocaleString()}`;
-
+        `Total deducciones: $${totalDeducciones.toLocaleString("es-CO")}`;
     document.getElementById("totalResultado").textContent =
-        `Total a recibir: $${total.toLocaleString()}`;
+        `Total a recibir: $${total.toLocaleString("es-CO")}`;
 }
-// MOSTRAR U OCULTAR MESADA PENSIONAL
 
-const edadInput =
-    document.getElementById("edad");
-
-const campoMesada =
-    document.getElementById("campoMesada");
-
-const datosLaborales =
-    document.getElementById("datosLaborales");
-
-// Estado inicial
+// MOSTRAR U OCULTAR CAMPOS SEGÚN EDAD
+const edadInput     = document.getElementById("edad");
+const campoMesada   = document.getElementById("campoMesada");
+const datosLaborales = document.getElementById("datosLaborales");
 
 campoMesada.style.display = "none";
 
 edadInput.addEventListener("input", function () {
-
-    const edad =
-        Number(this.value);
+    const edad = Number(this.value);
 
     if (edad >= 60) {
-
-        campoMesada.style.display = "flex";
+        campoMesada.style.display  = "flex";
         datosLaborales.style.display = "none";
-
-    } else {
-
-        campoMesada.style.display = "none";
+    } 
+    
+    else {
+        campoMesada.style.display  = "none";
         datosLaborales.style.display = "contents";
 
     }

@@ -1,156 +1,226 @@
-/*Emily Vanesa Chisaba Rivera CC1019035292*/
+/* Emily Vanesa Chisaba Rivera CC 1019035292 */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-*{
-    box-sizing:border-box;
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --color-fondo: #efefef;
+    --color-formulario: #3f48f5;
+    --color-acento: #d9f25d;
+    --color-texto: #ffffff;
+    --color-texto-oscuro: #3f48f5;
+    --color-texto-claro: #474747;
+    --color-acento-naranja: rgb(207, 131, 32);
+}
+
+html {
     font-family: 'Poppins', sans-serif;
 }
 
-
-
-:root{
-    --color-fondo:#efefef;
-    --color-formulario:#3f48f5;
-    --color-acento:#d9f25d;
-    --color-texto:#ffffff;
-    --color-texto-oscuro:#3f48f5;
-    --color-texto-claro:#474747;
-    --color-acento-naranja:rgb(207, 131, 32);
-}
-
-html,
-body{
-    overflow: hidden;
-}
-
-body{
-    font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    width: 100vw;
+body {
     background: var(--color-fondo);
-    color: var(--color-texto);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
 }
 
-.sectionFormulario{
-    display:grid;
-    grid-template-columns: 2fr 1fr;
-    gap:60px;
-    align-items:center;
-    min-height:100vh;
-    padding:20px;
-}
+/* ── LAYOUT PRINCIPAL ─────────────────────────── */
 
-h1{
-    color: var(--color-texto-oscuro);
-font-weight:700;
-    font-size:5rem;
-    line-height:0.9;
-    margin-bottom:15px;
-}
-
-p{
-    color: var(--color-texto-claro);
-    margin-bottom:20px;
-}
-
-.formulario{
-    min-height: 80% ;
-    max-height: 80%;
+.sectionFormulario {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* ── INTRODUCCIÓN ─────────────────────────────── */
+
+.introduccion h1 {
+    color: var(--color-texto-oscuro);
+    font-weight: 700;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 0.95;
+    margin-bottom: 16px;
+}
+
+.introduccion p {
+    color: var(--color-texto-claro);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ── FORMULARIO ───────────────────────────────── */
+
+.formulario {
     background: var(--color-formulario);
     padding: 40px;
     border-radius: 40px;
-    box-shadow: 0 10px 30px var(--color-texto-oscuro);
-}
-
-.campo{
+    box-shadow: 0 20px 60px rgba(63, 72, 245, 0.25);
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 0;
 }
 
-input, select{
-    background:white;
-    border:none;
-    border-radius:20px;
-    padding:12px;
-    color:var(--color-texto-claro);
-    outline:none;
+/* ── GRUPOS DE CAMPOS (filas de 2) ─────────────── */
+
+.fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
-input:focus,
-select:focus{
-    box-shadow:0 0 0 3px var(--color-acento-naranja);
+.fila.una-columna {
+    grid-template-columns: 1fr;
 }
 
-button{
-    grid-column: 1 / 2;
-    justify-self: center;
-    background:var(--color-acento);
-    color:var(--color-texto-oscuro);
-    border:none;
-    border-radius:20px;
-    padding:15px 40px;
-    font-size:1rem;
-    font-weight:700;
-    cursor:pointer;
-    transition:.3s;
-    margin-top:20px;
+.fila.tres-columnas {
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
-button:hover{
-    transform:translateY(-3px);
+/* ── CAMPO INDIVIDUAL ─────────────────────────── */
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-#resultado{
-    grid-column:2 / -1;
-    background:white;
-    padding:30px;
-    border-radius:30px;
-    color:#333;
+.campo label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.02em;
 }
 
-#campoMesada{
+input, select {
+    background: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: var(--color-texto-claro);
+    outline: none;
+    width: 100%;
+    transition: box-shadow 0.2s;
+}
+
+input:focus, select:focus {
+    box-shadow: 0 0 0 3px var(--color-acento-naranja);
+}
+
+/* ── DIVISOR ──────────────────────────────────── */
+
+.divisor {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 8px 0 20px;
+}
+
+/* ── SECCIÓN INFERIOR: botón + resultado ───────── */
+
+.seccion-inferior {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-top: 8px;
+}
+
+/* ── BOTÓN ────────────────────────────────────── */
+
+button {
+    background: var(--color-acento);
+    color: var(--color-texto-oscuro);
+    border: none;
+    border-radius: 14px;
+    padding: 14px 36px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    white-space: nowrap;
+    align-self: start;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(217, 242, 93, 0.4);
+}
+
+/* ── RESULTADO ────────────────────────────────── */
+
+#resultado {
+    background: white;
+    border-radius: 20px;
+    padding: 20px 24px;
+    color: var(--color-texto-claro);
+    min-height: 80px;
+}
+
+#resultado h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-texto-oscuro);
+    margin-bottom: 10px;
+}
+
+#resultado p {
+    font-size: 0.85rem;
+    color: var(--color-texto-claro);
+    line-height: 1.8;
+    margin: 0;
+}
+
+#resultado p:empty {
     display: none;
 }
 
-#datosLaborales{
-    display:grid;
-    grid-template-columns:inherit;
-    gap:10px;
+/* ── CAMPO MESADA ──────────── */
 
+#campoMesada {
+    display: none;
 }
 
-/*responsive------------------------------------------------------------*/
+/* ── RESPONSIVE ───────────────────────────────── */
 
+@media (max-width: 900px) {
+    .sectionFormulario {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
 
-@media (min-width:769px){
-    body{
-        height:100vh;
-        overflow:hidden;
-        display:block;
+    .introduccion h1 {
+        font-size: 2.5rem;
     }
 }
 
-@media (max-width:768px){
-    body{
-        overflow-y:auto;
-        overflow-x:hidden;
-        display:block;
+@media (max-width: 560px) {
+    .fila {
+        grid-template-columns: 1fr;
     }
 
-     .sectionFormulario{
-    grid-template-columns:1fr;
-    padding:15px;
-    width:95%;
+    .fila.tres-columnas {
+        grid-template-columns: 1fr;
     }
 
-    .formulario{
-        grid-template-columns:1fr;
-        width:95%;
-        
+    .seccion-inferior {
+        grid-template-columns: 1fr;
+    }
+
+    .formulario {
+        padding: 24px;
+        border-radius: 24px;
+    }
 }
-}   

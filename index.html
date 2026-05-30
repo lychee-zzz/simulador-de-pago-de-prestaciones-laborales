@@ -1,4 +1,4 @@
-<!--Emily Vanesa Chisaba Rivera CC1019035292 -->
+<!-- Emily Vanesa Chisaba Rivera CC 1019035292 -->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -11,130 +11,122 @@
 <body>
 
 <section class="sectionFormulario">
-<div class="introduccion">
-    <h1>Simulador de Pago de Prestaciones Laborales</h1>
 
-    <p>
-        Ingrese la información solicitada para calcular el pago de sus
-        prestaciones laborales.
-    </p>
-</div>
-<div>
-    <form class="formulario">
+    <div class="introduccion">
+        <h1>Simulador de Pago de Prestaciones Laborales</h1>
+        <p>Ingrese la información solicitada para calcular el pago de sus prestaciones laborales.</p>
+    </div>
 
-        <div class="campo">
-            <label for="nombreCompleto">Nombre Completo:</label>
-            <input type="text" id="nombreCompleto" required>
+    <form class="formulario" onsubmit="return false;">
+
+        <!-- Fila 1: Nombre + Edad -->
+        <div class="fila">
+            <div class="campo">
+                <label for="nombreCompleto">Nombre Completo</label>
+                <input type="text" id="nombreCompleto" placeholder="Ej: María García" required>
+            </div>
+            <div class="campo">
+                <label for="edad">Edad</label>
+                <input type="number" id="edad" placeholder="Ej: 30" min="0" max="120" required>
+            </div>
         </div>
 
-        <div class="campo">
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" required>
-        </div>
-        <div class="campo">
-            <label for="tipoDeDocumento">Tipo de Documento:</label>
-
-            <select id="tipoDeDocumento" required>
-                <option value="noSeleccionado">Seleccione</option>
-                <option value="rc">Registro Civil</option>
-                <option value="ti">Tarjeta de Identidad</option>
-                <option value="cc">Cédula de Ciudadanía</option>
-                <option value="ce">Cédula de Extranjería</option>
-                <option value="pp">Pasaporte</option>
-            </select>
-        </div>
-
-        <div class="campo">
-            <label for="numeroDeDocumento">Número de Documento:</label>
-            <input type="number" id="numeroDeDocumento" required>
+        <!-- Fila 2: Tipo doc + Número doc -->
+        <div class="fila">
+            <div class="campo">
+                <label for="tipoDeDocumento">Tipo de Documento</label>
+                <select id="tipoDeDocumento" required>
+                    <option value="noSeleccionado">Seleccione</option>
+                    <option value="RC">Registro Civil</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PP">Pasaporte</option>
+                </select>
+            </div>
+            <div class="campo">
+                <label for="numeroDeDocumento">Número de Documento</label>
+                <input type="number" id="numeroDeDocumento" placeholder="Sin puntos ni comas" required>
+            </div>
         </div>
 
-<!-- datos laborales -->
+        <hr class="divisor">
 
-    <div id="datosLaborales">  
+        <!-- Datos laborales -->
+        <div id="datosLaborales">
 
-        <div class="campo">
-            <label for="salario">Salario:</label>
-            <input type="number" id="salario" required>
+            <!-- Fila 3: Salario + Comisiones -->
+            <div class="fila">
+                <div class="campo">
+                    <label for="salario">Salario (COP)</label>
+                    <input type="number" id="salario" placeholder="Ej: 2000000">
+                </div>
+                <div class="campo">
+                    <label for="comisiones">Comisiones (COP)</label>
+                    <input type="number" id="comisiones" placeholder="Ej: 500000">
+                </div>
+            </div>
+
+            <!-- Fila 4: Horas extra + Nivel riesgo -->
+            <div class="fila">
+                <div class="campo">
+                    <label for="totalDeHorasExtras">Horas Extra (COP)</label>
+                    <input type="number" id="totalDeHorasExtras" placeholder="Ej: 100000">
+                </div>
+                <div class="campo">
+                    <label for="clasificacionDeNivelDeRiesgo">Nivel de Riesgo ARL</label>
+                    <select id="clasificacionDeNivelDeRiesgo">
+                        <option value="">Seleccione</option>
+                        <option value="1">I — Mínimo (0.522%)</option>
+                        <option value="2">II — Bajo (1.044%)</option>
+                        <option value="3">III — Medio (2.436%)</option>
+                        <option value="4">IV — Alto (4.350%)</option>
+                        <option value="5">V — Máximo (6.960%)</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
 
-        <div class="campo">
-            <label for="comisiones">Comisiones:</label>
-            <input type="number" id="comisiones">
+        <!-- Mesada pensional (solo >= 60 años) -->
+        <div class="fila una-columna">
+            <div class="campo" id="campoMesada">
+                <label for="mesadaPensional">Mesada Pensional (COP)</label>
+                <input type="number" id="mesadaPensional" placeholder="Solo para mayores de 60 años">
+            </div>
         </div>
 
-        <div class="campo">
-            <label for="totalDeHorasExtras">Horas Extras:</label>
-            <input type="number" id="totalDeHorasExtras">
+        <!-- Botón + Resultado -->
+        <div class="seccion-inferior">
+            <button type="button" onclick="calcular()">Calcular</button>
+
+            <div id="resultado">
+                <h2>Resultado del cálculo</h2>
+                <p id="nombreResultado"></p>
+                <p id="documentoResultado"></p>
+                <p id="salarioResultado"></p>
+                <p id="auxilioResultado"></p>
+                <p id="comisionesResultado"></p>
+                <p id="horasResultado"></p>
+                <p id="devengadoResultado"></p>
+                <p id="ibcResultado"></p>
+                <p id="saludResultado"></p>
+                <p id="pensionResultado"></p>
+                <p id="fondoResultado"></p>
+                <p id="arlResultado"></p>
+                <p id="deduccionesResultado"></p>
+                <p id="totalResultado"></p>
+            </div>
         </div>
 
-        <div class="campo">
-            <label for="clasificacionDeNivelDeRiesgo">
-                Nivel de Riesgo ARL:
-            </label>
-
-            <select id="clasificacionDeNivelDeRiesgo" required>
-                <option value="">Seleccione</option>
-                <option value="1">Nivel 1</option>
-                <option value="2">Nivel 2</option>
-                <option value="3">Nivel 3</option>
-                <option value="4">Nivel 4</option>
-                <option value="5">Nivel 5</option>
-            </select>
-        </div>
-        </div>
-        <div>
-          
-        <div class="campo" id="campoMesada">
-            <label for="mesadaPensional">Mesada Pensional:</label>
-            <input type="number" id="mesadaPensional" placeholder="Solo para mayores de 60 años">
-        </div>
-
-        <button type="button" onclick="calcular()">
-            Calcular
-        </button>
-</div>
     </form>
-</div>
-
-<div id="resultado">
-
-    <h2>Resultado del cálculo</h2>
-
-    <p id="nombreResultado"></p>
-
-    <p id="documentoResultado"></p>
-
-    <p id="salarioResultado"></p>
-
-    <p id="auxilioResultado"></p>
-
-    <p id="comisionesResultado"></p>
-
-    <p id="horasResultado"></p>
-
-    <p id="devengadoResultado"></p>
-
-    <p id="ibcResultado"></p>
-
-    <p id="saludResultado"></p>
-
-    <p id="pensionResultado"></p>
-
-    <p id="fondoResultado"></p>
-
-    <p id="arlResultado"></p>
-
-    <p id="deduccionesResultado"></p>
-
-    <p id="totalResultado"></p>
-
-</div>
 
 </section>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
+
 
