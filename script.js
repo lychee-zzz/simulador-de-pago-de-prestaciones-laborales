@@ -1,8 +1,68 @@
 /* Emily Vanesa Chisaba Rivera CC 1019035292 */
 
+// RETENCIÓN EN LA FUENTE
+
+function calcularRetencion(salario, comisiones, horasExtras, salud, pension, uvt) {
+
+    // 1. Base gravable = ingresos laborales sin auxilio de transporte
+    const ingresos = salario + comisiones + horasExtras;
+
+    // 2. Restar ingresos no constitutivos de renta (salud + pensión del empleado)
+    const noConstitutivos = salud + pension;
+    const despuesDeNoConstitutivos = ingresos - noConstitutivos;
+
+    // 3. Renta exenta: 25% del resultado, con tope de 240 UVT mensuales
+    const tope240UVT = 240 * uvt;
+    const rentaExenta = Math.min(despuesDeNoConstitutivos * 0.25, tope240UVT);
+
+    // 4. Base gravable final
+    const baseGravable = despuesDeNoConstitutivos - rentaExenta;
+
+    // 5. Convertir a UVT
+    const baseEnUVT = baseGravable / uvt;
+
+    // 6. Aplicar tabla Art. 383 ET
+    let retencionUVT = 0;
+
+    if (baseEnUVT <= 95) {
+
+        retencionUVT = 0;
+
+    } else if (baseEnUVT <= 150) {
+
+        retencionUVT = (baseEnUVT - 95) * 0.19;
+
+    } else if (baseEnUVT <= 360) {
+
+        retencionUVT = (baseEnUVT - 150) * 0.28 + 10;
+
+    } else if (baseEnUVT <= 640) {
+
+        retencionUVT = (baseEnUVT - 360) * 0.33 + 69;
+
+    } else if (baseEnUVT <= 945) {
+
+        retencionUVT = (baseEnUVT - 640) * 0.35 + 162;
+
+    } else if (baseEnUVT <= 2300) {
+
+        retencionUVT = (baseEnUVT - 945) * 0.37 + 268;
+
+    } else {
+
+        retencionUVT = (baseEnUVT - 2300) * 0.39 + 770;
+    }
+
+    // 7. Convertir resultado de UVT a pesos
+    return retencionUVT * uvt;
+}
+
 function calcular() {
 
     // LIMPIAR RESULTADOS
+    
+    document.getElementById("retencionResultado").textContent = "";
+
     const ids = [
         "nombreResultado", "documentoResultado", "salarioResultado",
         "auxilioResultado", "comisionesResultado", "horasResultado",
@@ -13,15 +73,15 @@ function calcular() {
     ids.forEach(id => document.getElementById(id).textContent = "");
 
     // DATOS PERSONALES
-    const nombreCompleto   = document.getElementById("nombreCompleto").value.trim();
-    const edad             = Number(document.getElementById("edad").value);
-    const tipoDocumento    = document.getElementById("tipoDeDocumento").value;
-    const numeroDocumento  = document.getElementById("numeroDeDocumento").value.trim();
+    const nombreCompleto = document.getElementById("nombreCompleto").value.trim();
+    const edad = Number(document.getElementById("edad").value);
+    const tipoDocumento = document.getElementById("tipoDeDocumento").value;
+    const numeroDocumento = document.getElementById("numeroDeDocumento").value.trim();
 
     // VALIDACIÓN DOCUMENTO
 
     if (tipoDocumento === "noSeleccionado") {
-        
+
         alert("Seleccione un tipo de documento.");
         return;
     }
@@ -104,13 +164,16 @@ function calcular() {
     const baseIBC = salario + comisiones + horasExtras;
     const ibc     = baseIBC * 0.70;
 
-    // DEDUCCIONES — solo aplican si salario >= 2 SMLV
+// DEDUCCIONES — solo aplican si salario >= 2 SMLV
+   
     let salud            = 0;
     let pension          = 0;
     let fondoSolidaridad = 0;
     let arl              = 0;
+    let retencion        = 0;     
 
     if (salario >= smlv * 2) {
+
         salud   = ibc * 0.04;
         pension = ibc * 0.04;
 
@@ -119,10 +182,19 @@ function calcular() {
         }
 
         arl = ibc * (arlTarifas[nivelRiesgo] || 0);
+
+        // RETENCIÓN EN LA FUENTE 
+        retencion = calcularRetencion(
+            salario,
+            comisiones,
+            horasExtras,
+            salud,
+            pension,
+            uvt
+        );
     }
 
-    const totalDeducciones = salud + pension + fondoSolidaridad + arl;
-    const total            = totalDevengado - totalDeducciones;
+    const totalDeducciones = salud + pension + fondoSolidaridad + arl + retencion;
 
     // MOSTRAR RESULTADOS
     document.getElementById("salarioResultado").textContent =
@@ -145,6 +217,8 @@ function calcular() {
         `Fondo de solidaridad (1%): $${fondoSolidaridad.toLocaleString("es-CO")}`;
     document.getElementById("arlResultado").textContent =
         `ARL (Nivel ${nivelRiesgo}): $${arl.toLocaleString("es-CO")}`;
+    document.getElementById("retencionResultado").textContent =
+        `Retención en la fuente: $${Math.round(retencion).toLocaleString("es-CO")}`;
     document.getElementById("deduccionesResultado").textContent =
         `Total deducciones: $${totalDeducciones.toLocaleString("es-CO")}`;
     document.getElementById("totalResultado").textContent =
