@@ -1,11 +1,13 @@
 /*Emily Vanesa Chisaba Rivera CC1019035292*/
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 *{
     box-sizing:border-box;
     font-family: 'Poppins', sans-serif;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 
 :root{
     --color-fondo:#efefef;
@@ -13,18 +15,26 @@
     --color-acento:#d9f25d;
     --color-texto:#ffffff;
     --color-texto-oscuro:#3f48f5;
+    --color-texto-claro:#474747;
+    --color-acento-naranja:rgb(207, 131, 32);
+}
+
+html,
+body{
+    overflow: hidden;
 }
 
 body{
     font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
     background: var(--color-fondo);
     color: var(--color-texto);
 }
 
 .sectionFormulario{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
     gap: 20px;
     align-items: center;
     padding: 30px;
@@ -32,11 +42,15 @@ body{
 
 h1{
     color: var(--color-texto-oscuro);
-    margin-bottom: 10px;
+    font-size:3.2rem;
+    font-weight:700;
+    line-height:1;
+    margin-bottom:15px;
 }
 
 p{
-    margin-bottom: 20px;
+    color: var(--color-texto-claro);
+    margin-bottom:20px;
 }
 
 .formulario{
@@ -44,8 +58,9 @@ p{
     grid-template-columns: 1fr 1fr;
     gap: 15px;
     background: var(--color-formulario);
-    padding:30px;
-    border-radius:35px;
+    padding: 30px;
+    border-radius: 35px;
+    box-shadow: 0 10px 30px rgba(63,72,245,.15);
 }
 
 .campo{
@@ -59,18 +74,48 @@ input, select{
     border:none;
     border-radius:20px;
     padding:12px;
+    color:var(--color-texto-claro);
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    box-shadow:0 0 0 3px var(--color-acento-naranja);
 }
 
 button{
-    background: var(--color-acento);
-    color: var(--color-texto-oscuro);
-    border: none;
-    border-radius: 20px;
-    padding: 12px;
-    font-weight: 700;
+    background:var(--color-acento);
+    color:var(--color-texto-oscuro);
+    border:none;
+    border-radius:20px;
+    padding:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
 }
 
 #resultado{
     margin-top: 20px;
     font-weight: bold;
+}
+
+/*responsive------------------------------------------------------------*/
+
+@media(max-width:768px){
+
+    .sectionFormulario{
+        grid-template-columns:1fr;
+    }
+
+    .formulario{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:2.3rem;
+    }
 }
