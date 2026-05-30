@@ -1,61 +1,68 @@
 /*Emily Vanesa Chisaba Rivera CC1019035292*/
 
-/*colores*/
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-:root {
-    --color-fondo: linear-gradient(to bottom, #d4f7d4, #194d19);
-    --color-texto: #030703;
-    --color-titulo: #3ec500;
-    --color-formulario: #fefdff;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --color-fondo:#e0e0e0;
+    --color-texto:#030703;
+    --color-titulo:#8700c5;
+    --blanco:#ffffff;
 }
 
-.sectionFormulario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2%; 
+body{
+    font-family: 'Poppins', sans-serif;
+    min-height:100vh;
+    background:var(--color-fondo);
+    color:var(--color-texto);
 }
 
-form {    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1%;
-    background-color: var(--color-formulario);
-    padding: 20px;
-    border-radius: 10px;
+.sectionFormulario{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:30px;
 }
-.formulario {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1%;
-    background-color: var(--color-formulario);
-    padding: 2%;
-    border-radius: 10%;
+
+h1{
+    color:var(--color-titulo);
+    margin-bottom:10px;
 }
-body {
-    display: grid;
-    grid-template-columns: 2fr;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    width: 100vw;
-    background-color: var(--color-fondo);
-    color: var(--color-texto);
+
+p{
+    margin-bottom:20px;
 }
-h1 {
-    color: var(--color-titulo);
-    font-size: 2.5em;
-    margin-bottom: 0.5em;
+
+.formulario{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    background: var(--blanco);
+    padding:25px;
+    border-radius:10px;
 }
-p {
-    color: var(--color-titulo);
-    font-size: 1.2em;
-    margin-bottom: 1.5em;
+
+.campo{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+}
+
+input,
+select{
+    padding:8px;
+}
+
+button{
+    padding:10px;
+    cursor:pointer;
+}
+
+#resultado{
+    margin-top:20px;
+    font-weight:bold;
 }
