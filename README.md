@@ -24,20 +24,27 @@ No requiere instalación ni dependencias externas.
 ---
 
 ## Estructura del proyecto
-/
-├── index.html        # Estructura de la página
-├── style.css         # Estilos y diseño
-├── script.js         # Lógica y cálculos
-├── pseudocodigo/     # Pseudocódigo hecho a mano 
-│   └── pseudocodigo.jpg
-├── identidifacion de edge cases/     # Tablas con edge cases
-│   └── IMG_20260508_082544313_HDR.jpg
-│   └── IMG_20260508_082550916.jpg
-│   └── IMG_20260508_082556498.jpg
-│   └── IMG_20260508_082601921.jpg
-│   └── IMG_20260508_082611007_HDR.jpg
-│   └── IMG_20260508_082617465_HDR.jpg
-└── README.md         # Este archivo
+
+├── index.html        # Estructura de la página <br>
+├── style.css         # Estilos y diseño <br>
+├── script.js         # Lógica y cálculos <br>
+├── pseudocodigo/     # Pseudocódigo hecho a mano <br>
+│   └── IMG_20260530_185834262_HDR.jpg <br>
+│   └── IMG_20260530_185848549_HDR.jpg <br>
+│   └── IMG_20260530_185856507_HDR.jpg <br>
+│   └── IMG_20260530_185901825_HDR.jpg <br>
+│   └── IMG_20260530_185911872_HDR.jpg <br>
+│   └── IMG_20260530_185918316_HDR.jpg <br>
+│   └── IMG_20260530_185924546_HDR.jpg <br>
+│   └── IMG_20260530_185933142_HDR.jpg <br>
+├── identidifacion de edge cases/     # Tablas con edge cases <br>
+│   └── IMG_20260508_082544313_HDR.jpg <br>
+│   └── IMG_20260508_082550916.jpg <br>
+│   └── IMG_20260508_082556498.jpg <br>
+│   └── IMG_20260508_082601921.jpg <br>
+│   └── IMG_20260508_082611007_HDR.jpg <br>
+│   └── IMG_20260508_082617465_HDR.jpg <br>
+└── README.md         # Este archivo <br>
 
 ---
 
